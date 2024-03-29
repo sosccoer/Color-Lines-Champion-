@@ -17,8 +17,13 @@
 		7D7936D02BB7672F002DE7CA /* Inter-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7D7936C72BB7672E002DE7CA /* Inter-Medium.ttf */; };
 		7D7936D12BB7672F002DE7CA /* Inter-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7D7936C82BB7672E002DE7CA /* Inter-Black.ttf */; };
 		7D7936D22BB7672F002DE7CA /* Inter-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7D7936C92BB7672E002DE7CA /* Inter-Regular.ttf */; };
+		7D7936D42BB775F9002DE7CA /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7936D32BB775F9002DE7CA /* LoadingView.swift */; };
+		7D7936D72BB77BCB002DE7CA /* Honk-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7D7936D62BB77BCB002DE7CA /* Honk-Regular.ttf */; };
+		7D7936DA2BB77D46002DE7CA /* BungeeSpice-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7D7936D92BB77D46002DE7CA /* BungeeSpice-Regular.ttf */; };
+		7D7936DD2BB7851C002DE7CA /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7936DC2BB7851C002DE7CA /* MenuView.swift */; };
+		7D7936E12BB78996002DE7CA /* MultiroundPro.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7D7936E02BB78996002DE7CA /* MultiroundPro.otf */; };
+		7D7936E52BB78A93002DE7CA /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D7936E42BB78A93002DE7CA /* NotificationsView.swift */; };
 		7DA1B5CC2BB71E5100D54A41 /* Color_Lines_ChampionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA1B5CB2BB71E5100D54A41 /* Color_Lines_ChampionApp.swift */; };
-		7DA1B5CE2BB71E5100D54A41 /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA1B5CD2BB71E5100D54A41 /* NotificationsView.swift */; };
 		7DA1B5D02BB71E5300D54A41 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7DA1B5CF2BB71E5300D54A41 /* Assets.xcassets */; };
 		7DA1B5D32BB71E5300D54A41 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7DA1B5D22BB71E5300D54A41 /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -34,9 +39,14 @@
 		7D7936C72BB7672E002DE7CA /* Inter-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Medium.ttf"; sourceTree = "<group>"; };
 		7D7936C82BB7672E002DE7CA /* Inter-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Black.ttf"; sourceTree = "<group>"; };
 		7D7936C92BB7672E002DE7CA /* Inter-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Regular.ttf"; sourceTree = "<group>"; };
+		7D7936D32BB775F9002DE7CA /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		7D7936D62BB77BCB002DE7CA /* Honk-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Honk-Regular.ttf"; sourceTree = "<group>"; };
+		7D7936D92BB77D46002DE7CA /* BungeeSpice-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BungeeSpice-Regular.ttf"; sourceTree = "<group>"; };
+		7D7936DC2BB7851C002DE7CA /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
+		7D7936E02BB78996002DE7CA /* MultiroundPro.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MultiroundPro.otf; sourceTree = "<group>"; };
+		7D7936E42BB78A93002DE7CA /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
 		7DA1B5C82BB71E5100D54A41 /* Color Lines Champion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Color Lines Champion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7DA1B5CB2BB71E5100D54A41 /* Color_Lines_ChampionApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color_Lines_ChampionApp.swift; sourceTree = "<group>"; };
-		7DA1B5CD2BB71E5100D54A41 /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
 		7DA1B5CF2BB71E5300D54A41 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7DA1B5D22BB71E5300D54A41 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -55,6 +65,9 @@
 		7D7936BF2BB76653002DE7CA /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				7D7936DF2BB788BC002DE7CA /* Multiround Pro */,
+				7D7936D82BB77D3D002DE7CA /* BungeeSpice */,
+				7D7936D52BB77BBA002DE7CA /* Honk */,
 				7D7936C02BB7671F002DE7CA /* Inter */,
 			);
 			path = Fonts;
@@ -74,6 +87,40 @@
 				7D7936C62BB7672E002DE7CA /* Inter-Thin.ttf */,
 			);
 			path = Inter;
+			sourceTree = "<group>";
+		};
+		7D7936D52BB77BBA002DE7CA /* Honk */ = {
+			isa = PBXGroup;
+			children = (
+				7D7936D62BB77BCB002DE7CA /* Honk-Regular.ttf */,
+			);
+			path = Honk;
+			sourceTree = "<group>";
+		};
+		7D7936D82BB77D3D002DE7CA /* BungeeSpice */ = {
+			isa = PBXGroup;
+			children = (
+				7D7936D92BB77D46002DE7CA /* BungeeSpice-Regular.ttf */,
+			);
+			path = BungeeSpice;
+			sourceTree = "<group>";
+		};
+		7D7936DB2BB78506002DE7CA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7D7936E42BB78A93002DE7CA /* NotificationsView.swift */,
+				7D7936D32BB775F9002DE7CA /* LoadingView.swift */,
+				7D7936DC2BB7851C002DE7CA /* MenuView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7D7936DF2BB788BC002DE7CA /* Multiround Pro */ = {
+			isa = PBXGroup;
+			children = (
+				7D7936E02BB78996002DE7CA /* MultiroundPro.otf */,
+			);
+			path = "Multiround Pro";
 			sourceTree = "<group>";
 		};
 		7DA1B5BF2BB71E5100D54A41 = {
@@ -97,7 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				7DA1B5CB2BB71E5100D54A41 /* Color_Lines_ChampionApp.swift */,
-				7DA1B5CD2BB71E5100D54A41 /* NotificationsView.swift */,
+				7D7936DB2BB78506002DE7CA /* Views */,
 				7D7936BF2BB76653002DE7CA /* Fonts */,
 				7DA1B5CF2BB71E5300D54A41 /* Assets.xcassets */,
 				7DA1B5D12BB71E5300D54A41 /* Preview Content */,
@@ -178,10 +225,13 @@
 				7DA1B5D32BB71E5300D54A41 /* Preview Assets.xcassets in Resources */,
 				7D7936CA2BB7672E002DE7CA /* Inter-SemiBold.ttf in Resources */,
 				7D7936D12BB7672F002DE7CA /* Inter-Black.ttf in Resources */,
+				7D7936D72BB77BCB002DE7CA /* Honk-Regular.ttf in Resources */,
 				7D7936D22BB7672F002DE7CA /* Inter-Regular.ttf in Resources */,
 				7DA1B5D02BB71E5300D54A41 /* Assets.xcassets in Resources */,
+				7D7936DA2BB77D46002DE7CA /* BungeeSpice-Regular.ttf in Resources */,
 				7D7936CF2BB7672F002DE7CA /* Inter-Thin.ttf in Resources */,
 				7D7936D02BB7672F002DE7CA /* Inter-Medium.ttf in Resources */,
+				7D7936E12BB78996002DE7CA /* MultiroundPro.otf in Resources */,
 				7D7936CC2BB7672F002DE7CA /* Inter-Light.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -193,8 +243,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7DA1B5CE2BB71E5100D54A41 /* NotificationsView.swift in Sources */,
+				7D7936DD2BB7851C002DE7CA /* MenuView.swift in Sources */,
+				7D7936E52BB78A93002DE7CA /* NotificationsView.swift in Sources */,
 				7DA1B5CC2BB71E5100D54A41 /* Color_Lines_ChampionApp.swift in Sources */,
+				7D7936D42BB775F9002DE7CA /* LoadingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -4,6 +4,7 @@
 <dict>
 	<key>UIAppFonts</key>
 	<array>
+		<string>BungeeSpice-Regular.ttf</string>
 		<string>Inter-Black.ttf</string>
 		<string>Inter-Bold.ttd</string>
 		<string>Inter-ExtraBold.ttf</string>
@@ -13,6 +14,7 @@
 		<string>Inter-Regular.ttf</string>
 		<string>Inter-SemiBold.ttf</string>
 		<string>Inter-Thin.ttf</string>
+		<string>MultiroundPro.otf</string>
 	</array>
 </dict>
 </plist>
