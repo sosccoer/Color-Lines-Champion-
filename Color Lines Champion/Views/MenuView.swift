@@ -7,9 +7,11 @@
 
 import SwiftUI
 import SafariServices
+import SpriteKit
 
 struct MenuView: View {
     @State var isPresentedSafari: Bool = false
+    
     var body: some View {
         NavigationStack{
             ZStack{
@@ -24,7 +26,10 @@ struct MenuView: View {
                         .padding(.bottom,64)
                         .padding(.horizontal,32)
                     
-                    NavigationLink(destination: LoadingView()){
+                    NavigationLink(destination: GameView()
+                        .ignoresSafeArea()
+                        .navigationBarHidden(true)
+                    ){
                         
                         Text("PLAY NOW")
                             .font(.custom("MultiroundPro", size: 30))
@@ -49,11 +54,13 @@ struct MenuView: View {
                                     .resizable()
                             )
                     }
-                    }
+                }
             }.fullScreenCover(isPresented: $isPresentedSafari){
                 
                 PrivacyPolicyView(url: URL(string: "https://t0.gstatic.com/licensed-image?q=tbn:ANd9GcTZCSmCzmIPm0up8wmW566cK5w3sSTUChT5UnaU3VnFxrHwoRNSnks0xUBmj2r2oeJk")!, isPresentedSafari: $isPresentedSafari).ignoresSafeArea()
-            }.ignoresSafeArea()
+            }
+            .ignoresSafeArea()
+            
         }
     }
 }
@@ -68,7 +75,7 @@ struct PrivacyPolicyView: UIViewControllerRepresentable {
     
     func makeUIViewController(context: Context) -> UIViewController {
         let safariViewController = SFSafariViewController(url: url)
- 
+        
         let closeButton = UIBarButtonItem(barButtonSystemItem: .done, target: context.coordinator, action: #selector(Coordinator.closeSafari))
         safariViewController.navigationItem.rightBarButtonItem = closeButton
         
@@ -77,7 +84,7 @@ struct PrivacyPolicyView: UIViewControllerRepresentable {
     
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
     }
-
+    
     func makeCoordinator() -> Coordinator {
         Coordinator(parent: self)
     }
