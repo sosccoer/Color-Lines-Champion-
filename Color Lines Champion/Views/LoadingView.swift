@@ -35,21 +35,15 @@ struct LoadingView: View {
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 3){
                     isPresentedNextView = true
-                    
                 }
-              
             }
             .fullScreenCover(isPresented: $isPresentedNextView, content: {
-                NotificationsView()
+                MenuView()
             })
         }
         .ignoresSafeArea()
         .navigationBarHidden(true)
-        
     }
-    
-    
-    
 }
 
 struct LoadingView_Previews: PreviewProvider {
