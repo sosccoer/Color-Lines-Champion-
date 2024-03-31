@@ -14,8 +14,10 @@ struct GameView: UIViewRepresentable {
         // Создаем сцену SpriteKit
         var scene: SKScene {
             let scene = GameScene()
-            scene.size = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
-            scene.scaleMode = .fill
+            scene.size = CGSize(width: 300, height: 500)
+//            scene.size = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
+            scene.scaleMode = .aspectFit
+           
             return scene
         }
         
