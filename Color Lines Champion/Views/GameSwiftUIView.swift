@@ -13,6 +13,8 @@ struct GameSwiftUIView: View {
     
     @State var cellsState: [[GameCellState]] = Array(repeating: Array(repeating: GameCellState(), count: 9), count: 9)
     
+    @State private var cellIsSelected: GameCellState? = nil
+    
     var body: some View {
         ZStack{
             
@@ -28,7 +30,7 @@ struct GameSwiftUIView: View {
                             .resizable()
                             .frame(width: 48,height: 48)
                     }.padding(.leading,16)
-                        .padding(.top,32)
+                        .padding(.top,48)
                     Spacer()
                 }
                 
@@ -39,28 +41,53 @@ struct GameSwiftUIView: View {
                         ForEach(self.cellsState[rowIndex].indices, id: \.self) { columnIndex in
                             GameCell(sizeOfCell: self.screen, state: self.$cellsState[rowIndex][columnIndex]).id(rowIndex * 10 + columnIndex)
                                 .onTapGesture {
-                                    if cellsState[rowIndex][columnIndex].size == .small {
-                                        cellsState[rowIndex][columnIndex].isFilled.toggle()
-                                        // нужно добавить проверку на все чтобы не выделить несколько
+                                    
+                                    if cellIsSelected == nil {
+                                        if cellsState[rowIndex][columnIndex].size == .small {
+                                            cellsState[rowIndex][columnIndex].isFilled.toggle()
+                                            cellIsSelected = cellsState[rowIndex][columnIndex]
+                                            
+                                            // нужно добавить проверку на все чтобы не выделить несколько
+                                        }
+                                    }else {
+                                        if cellsState[rowIndex][columnIndex].color == nil {
+                                           
+                                            for (row, rowCells) in cellsState.enumerated() {
+                                                if let column = rowCells.firstIndex(where: { $0 == cellIsSelected }) {
+                                                    cellsState[row][column].color = nil
+                                                    break
+                                                }
+                                                
+                                            }
+                                            
+                                            cellIsSelected?.isFilled = false
+                                            cellIsSelected?.size = .big
+                                            cellsState[rowIndex][columnIndex] = cellIsSelected ?? GameCellState()
+                                            cellIsSelected = nil
+                                            
+                                            
+                                            
+                                            
+                                        }
+                                           
                                     }
                                 }
                         }
                     }
-                }
-                .padding(.horizontal, 16)
+                    
+                }.padding(.horizontal, 16)
                 Spacer()
-            }
-            
-            if presentSettings == true {
-                SettingsView(isPresented: $presentSettings)
-            }
-            
-        }.ignoresSafeArea()
-            .onAppear {
-                createBalls(size: .big)
-                createBalls(size: .small)
-            }
-        
+                
+                if presentSettings == true {
+                    SettingsView(isPresented: $presentSettings)
+                }
+                
+            }.ignoresSafeArea()
+                .onAppear {
+                    createBalls(size: .big)
+                    createBalls(size: .small)
+                }
+        }
     }
     
     private func createBalls(size: SizeBall){
@@ -146,7 +173,7 @@ enum SizeBall{
     case big
 }
 
-struct GameCellState {
+struct GameCellState: Equatable {
     var color: Balls?
     var size: SizeBall
     var isFilled: Bool
