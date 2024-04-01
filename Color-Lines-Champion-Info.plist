@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>Privacy - Vibration Usage Description</key>
+	<string>Для обеспечения интерактивного пользовательского опыта.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>BungeeSpice-Regular.ttf</string>

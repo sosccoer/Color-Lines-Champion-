@@ -6,17 +6,29 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct GameSwiftUIView: View {
     let screen: CGFloat = (UIScreen.main.bounds.size.width / 9) - 5
     @State private var presentSettings = false
-    @State private var cellsState: [[GameCellState]] = Array(repeating: Array(repeating: GameCellState(), count: 9), count: 9)
+    @State private var presentLose = false
     
+    @State private var cellsState: [[GameCellState]] = Array(repeating: Array(repeating: GameCellState(), count: 9), count: 9)
     @State private var cellIsSelected: GameCellState? = nil
+    
+    @State private var score: Int = 0
+    @State private var bestScore: Int = 0
+    
+    @State private var vibrationBool: Bool = true
+    @State private var soundBool: Bool = true
+    
+    @State private var audio = Audio()
+    @State private var vibration = Vibration()
+    
+    
     
     var body: some View {
         ZStack{
-            
             Image("BGGame")
                 .resizable()
             VStack{
@@ -32,18 +44,41 @@ struct GameSwiftUIView: View {
                         .padding(.top,48)
                     Spacer()
                 }
+                .padding(.bottom,100)
                 
-                Spacer()
+                
+                HStack{
+                    
+                    Text("Score: \(score)")
+                        .font(.custom("MultiroundPro", size: 20))
+                        .foregroundColor(Color("ScoreYellow"))
+                    Spacer()
+                    Text("Score: \(score)")
+                        .font(.custom("MultiroundPro", size: 20))
+                        .foregroundColor(Color("ScoreYellow"))
+                    
+                    
+                }.padding(.all,16)
                 
                 LazyVGrid(columns: Array(repeating: GridItem(), count: 9), spacing: 2) {
                     ForEach(cellsState.indices, id: \.self) { rowIndex in
                         ForEach(self.cellsState[rowIndex].indices, id: \.self) { columnIndex in
                             GameCell(sizeOfCell: self.screen, state: self.$cellsState[rowIndex][columnIndex]).id(rowIndex * 10 + columnIndex)
                                 .onTapGesture {
+                                    
+                                    if  cellsState[rowIndex][columnIndex].color != nil {
+                                        handleCellSelection(rowIndex: rowIndex, columnIndex: columnIndex)
+                                        
+                                    }
+                                    
                                     if cellIsSelected == nil {
                                         handleCellSelection(rowIndex: rowIndex, columnIndex: columnIndex)
                                     } else {
                                         moveSelectedCell(rowIndex: rowIndex, columnIndex: columnIndex)
+                                        if checkForWinner() {
+                                            print("5 шаров")
+                                            
+                                        }
                                     }
                                 }
                         }
@@ -51,12 +86,15 @@ struct GameSwiftUIView: View {
                     
                 }.padding(.horizontal, 16)
                 Spacer()
-                 
+                
             }
             if presentSettings == true {
-                SettingsView(isPresented: $presentSettings)
+                SettingsView(isPresented: $presentSettings,vibrationToggle: $vibrationBool,soundToggle: $soundBool)
             }
             
+            if presentLose == true {
+                WinLoseView(typeOfView: .lose, score: $score, bestScore: $bestScore, presentView: $presentLose)
+            }
             
         }.ignoresSafeArea()
             .onAppear {
@@ -69,7 +107,13 @@ struct GameSwiftUIView: View {
         guard cellsState[rowIndex][columnIndex].size == .small else { return }
         
         cellsState[rowIndex][columnIndex].isFilled.toggle()
-        cellIsSelected = cellsState[rowIndex][columnIndex]
+        
+        if cellsState[rowIndex][columnIndex].isFilled == false {
+            cellIsSelected = nil
+        }else {
+            cellIsSelected = cellsState[rowIndex][columnIndex]
+            
+        }
     }
     
     private func moveSelectedCell(rowIndex: Int, columnIndex: Int) {
@@ -98,7 +142,7 @@ struct GameSwiftUIView: View {
         createBalls(size: .small)
     }
     
-    private func createBalls(size: SizeBall){
+    private func createBalls(size: SizeBall) {
         let quantityNeedToCreate: Int = {
             switch size {
             case .small:
@@ -109,102 +153,116 @@ struct GameSwiftUIView: View {
         }()
         
         let colors: [Balls] = [.pink, .yellow, .blue, .green, .red, .purple, .brown, .darkBlue]
-        for (index,color) in colors.enumerated() {
+        
+        var attempts = 0
+        
+        for (index, color) in colors.enumerated() {
             if index == quantityNeedToCreate {
                 break
             }
-            let randomCalor = colors.randomElement()
             var randomRow = Int.random(in: 0..<9)
             var randomColumn = Int.random(in: 0..<9)
             
-            while cellsState[randomRow][randomColumn].color != nil {
+            while (cellsState[randomRow][randomColumn].color != nil) && (attempts < 100) {
                 randomRow = Int.random(in: 0..<9)
                 randomColumn = Int.random(in: 0..<9)
+                attempts += 1
             }
-            
             cellsState[randomRow][randomColumn] = GameCellState(color: color, size: size, isFilled: false)
             
+            if attempts >= 100 {
+                print("Не удалось создать новый шарик.")
+                presentLose.toggle()
+            }
+        }
+        
+    }
+
+    private func checkRowForWin(rowIndex: Int) -> Bool {
+        let rowCells = cellsState[rowIndex]
+        
+        for columnIndex in 0..<rowCells.count - 4 {
+            let firstColor = rowCells[columnIndex].color
+            
+            if firstColor != nil &&
+                firstColor == rowCells[columnIndex + 1].color &&
+                firstColor == rowCells[columnIndex + 2].color &&
+                firstColor == rowCells[columnIndex + 3].color &&
+                firstColor == rowCells[columnIndex + 4].color {
+                removeWinningBalls(rowIndex: rowIndex, columnIndex: columnIndex, tableType: .row)
+                score += 5
+                if score > bestScore {
+                    bestScore = score
+                }
+                return true
+            }
+        }
+        
+        return false
+    }
+    
+    private func checkColumnForWin(columnIndex: Int) -> Bool {
+        for rowIndex in 0..<cellsState.count - 4 {
+            let firstColor = cellsState[rowIndex][columnIndex].color
+            
+            if firstColor != nil &&
+                firstColor == cellsState[rowIndex + 1][columnIndex].color &&
+                firstColor == cellsState[rowIndex + 2][columnIndex].color &&
+                firstColor == cellsState[rowIndex + 3][columnIndex].color &&
+                firstColor == cellsState[rowIndex + 4][columnIndex].color {
+                
+                removeWinningBalls(rowIndex: rowIndex, columnIndex: columnIndex, tableType: .column)
+                score += 5
+                return true
+            }
+        }
+        
+        return false
+    }
+    
+    private func removeWinningBalls(rowIndex: Int, columnIndex: Int,tableType: TableType) {
+        
+        switch tableType {
+        case .row:
+            for i in 0..<5 {
+                cellsState[rowIndex][columnIndex + i].color = nil
+            }
+        case .column:
+            for i in 0..<5 {
+                cellsState[rowIndex + i][columnIndex].color = nil
+            }
+            
+            if vibrationBool == true {
+                vibration.vibration()
+            }
+            
+            if soundBool == true {
+                audio.playSound()
+            }
             
         }
     }
+    
+    private func checkForWinner() -> Bool {
+        for rowIndex in 0..<cellsState.count {
+            if checkRowForWin(rowIndex: rowIndex) {
+                return true
+            }
+        }
+        
+        for columnIndex in 0..<cellsState[0].count {
+            if checkColumnForWin(columnIndex: columnIndex) {
+                return true
+            }
+        }
+        
+        return false
+    }
+    
 }
 
 #Preview {
     GameSwiftUIView()
 }
 
-struct GameCell: View  {
-    
-    @State var sizeOfCell: CGFloat
-    @Binding var state: GameCellState
-    
-    var ballSize: CGFloat {
-        switch state.size {
-        case .small:
-            sizeOfCell - (sizeOfCell / 2)
-        case .big:
-            sizeOfCell - (sizeOfCell / 5)
-        }
-    }
-    
-    var body: some View {
-        
-        ZStack{
-            Image("CellBackground")
-                .resizable()
-                .frame(width: sizeOfCell,height: sizeOfCell)
-                .cornerRadius(12)
-            Rectangle().fill(.white).frame(width: sizeOfCell - (sizeOfCell / 10) ,height: sizeOfCell - (sizeOfCell / 10))
-                .cornerRadius(12)
-            
-            if let color = state.color?.rawValue, state.size == .small, state.isFilled == true {
-                Image(color)
-                    .frame(width: ballSize, height: ballSize)
-                    .clipShape(Circle())
-                    .overlay(Circle().stroke(Color.blue, lineWidth: 2))
-            } else if let color = state.color?.rawValue {
-                Image(color)
-                    .frame(width: ballSize, height: ballSize)
-                    .clipShape(Circle())
-            }
-            
-        }
-    }
-    
-}
-
-enum Balls: String {
-    case pink
-    case yellow
-    case blue
-    case green
-    case purple
-    case brown
-    case darkBlue
-    case red
-}
-
-enum SizeBall{
-    case small
-    case big
-}
-
-struct GameCellState: Equatable {
-    var color: Balls?
-    var size: SizeBall
-    var isFilled: Bool
-    
-    init() {
-        color = nil
-        size = .small
-        isFilled = false
-    }
-    
-    init(color: Balls,size: SizeBall,isFilled: Bool) {
-        self.color = color
-        self.size = size
-        self.isFilled = isFilled
-    }
-    
-}
 
