@@ -38,7 +38,7 @@ struct LoadingView: View {
                 }
             }
             .fullScreenCover(isPresented: $isPresentedNextView, content: {
-                MenuView()
+                NotificationsView()
             })
         }
         .ignoresSafeArea()

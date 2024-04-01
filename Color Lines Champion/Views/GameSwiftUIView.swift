@@ -9,6 +9,7 @@ import SwiftUI
 
 struct GameSwiftUIView: View {
     let screen: CGFloat = (UIScreen.main.bounds.size.width / 9) - 5
+    @State private var presentSettings = false
     
     @State var cellsState: [[GameCellState]] = Array(repeating: Array(repeating: GameCellState(), count: 9), count: 9)
     
@@ -17,25 +18,52 @@ struct GameSwiftUIView: View {
             
             Image("BGGame")
                 .resizable()
-            
-            LazyVGrid(columns: Array(repeating: GridItem(), count: 9), spacing: 2) {
-                ForEach(cellsState.indices, id: \.self) { rowIndex in
-                    ForEach(self.cellsState[rowIndex].indices, id: \.self) { columnIndex in
-                        GameCell(sizeOfCell: self.screen, state: self.$cellsState[rowIndex][columnIndex]).id(rowIndex * 10 + columnIndex)
+            VStack{
+                
+                HStack{
+                    Button(action: {
+                        presentSettings.toggle()
+                    }){
+                        Image("pause")
+                            .resizable()
+                            .frame(width: 48,height: 48)
+                    }.padding(.leading,16)
+                        .padding(.top,32)
+                    Spacer()
+                }
+                
+                Spacer()
+                
+                LazyVGrid(columns: Array(repeating: GridItem(), count: 9), spacing: 2) {
+                    ForEach(cellsState.indices, id: \.self) { rowIndex in
+                        ForEach(self.cellsState[rowIndex].indices, id: \.self) { columnIndex in
+                            GameCell(sizeOfCell: self.screen, state: self.$cellsState[rowIndex][columnIndex]).id(rowIndex * 10 + columnIndex)
+                                .onTapGesture {
+                                    if cellsState[rowIndex][columnIndex].size == .small {
+                                        cellsState[rowIndex][columnIndex].isFilled.toggle()
+                                        // нужно добавить проверку на все чтобы не выделить несколько
+                                    }
+                                }
+                        }
                     }
                 }
+                .padding(.horizontal, 16)
+                Spacer()
             }
-            .padding(.horizontal, 16)
+            
+            if presentSettings == true {
+                SettingsView(isPresented: $presentSettings)
+            }
             
         }.ignoresSafeArea()
             .onAppear {
                 createBalls(size: .big)
                 createBalls(size: .small)
             }
+        
     }
     
     private func createBalls(size: SizeBall){
-        
         let quantityNeedToCreate: Int = {
             switch size {
             case .small:
@@ -53,7 +81,7 @@ struct GameSwiftUIView: View {
             let randomCalor = colors.randomElement()
             let randomRow = Int.random(in: 0..<9)
             let randomColumn = Int.random(in: 0..<9)
-            cellsState[randomRow][randomColumn] = GameCellState(color: color, size: size)
+            cellsState[randomRow][randomColumn] = GameCellState(color: color, size: size, isFilled: false)
         }
     }
 }
@@ -86,8 +114,13 @@ struct GameCell: View  {
             Rectangle().fill(.white).frame(width: sizeOfCell - (sizeOfCell / 10) ,height: sizeOfCell - (sizeOfCell / 10))
                 .cornerRadius(12)
             
-            if let text = state.color?.rawValue {
-                Image(state.color!.rawValue)
+            if let color = state.color?.rawValue, state.size == .small, state.isFilled == true {
+                Image(color)
+                    .frame(width: ballSize, height: ballSize)
+                    .clipShape(Circle())
+                    .overlay(Circle().stroke(Color.blue, lineWidth: 2))
+            } else if let color = state.color?.rawValue {
+                Image(color)
                     .frame(width: ballSize, height: ballSize)
                     .clipShape(Circle())
             }
@@ -124,10 +157,10 @@ struct GameCellState {
         isFilled = false
     }
     
-    init(color: Balls,size: SizeBall) {
+    init(color: Balls,size: SizeBall,isFilled: Bool) {
         self.color = color
         self.size = size
-        self.isFilled = false
+        self.isFilled = isFilled
     }
     
 }

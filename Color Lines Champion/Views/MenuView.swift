@@ -10,7 +10,7 @@ import SafariServices
 import SpriteKit
 
 struct MenuView: View {
-    @State var isPresentedSafari: Bool = false
+    @State private var isPresentedSafari: Bool = false
     
     var body: some View {
         NavigationStack{
@@ -20,11 +20,25 @@ struct MenuView: View {
                 
                 VStack{
                     
+                    HStack{
+                        NavigationLink(destination:LoadingView().navigationBarHidden(true)){
+                            Image("presentButton")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 48,height: 48)
+                        }
+                        Spacer()
+                    }.padding(.top,48)
+                        .padding(.leading,16)
+                    
+                    
+                    Spacer()
                     Image("Logo")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .padding(.bottom,64)
                         .padding(.horizontal,32)
+                    
                     
                     NavigationLink(destination: GameSwiftUIView()
                         .ignoresSafeArea()
@@ -54,6 +68,7 @@ struct MenuView: View {
                                     .resizable()
                             )
                     }
+                    Spacer()
                 }
             }.fullScreenCover(isPresented: $isPresentedSafari){
                 
@@ -61,7 +76,7 @@ struct MenuView: View {
             }
             .ignoresSafeArea()
             
-        }
+        }.navigationBarHidden(true)
     }
 }
 

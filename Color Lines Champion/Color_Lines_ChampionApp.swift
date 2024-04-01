@@ -11,7 +11,7 @@ import SwiftUI
 struct Color_Lines_ChampionApp: App {
     var body: some Scene {
         WindowGroup {
-            NotificationsView()
+            MenuView()
         }
     }
 }

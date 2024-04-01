@@ -42,7 +42,7 @@ struct NotificationsView: View {
                         .foregroundColor(Color("Gray"))
                         .padding(.bottom,16)
                     
-                    NavigationLink(destination: LoadingView()){
+                    NavigationLink(destination: MenuView()){
                         Text("Yes, I Want Bonuses!")
                             .font(.custom("Inter-Medium", size: 20))
                             .foregroundStyle(Color("Black"))
@@ -54,7 +54,7 @@ struct NotificationsView: View {
                             .padding(.bottom,16)
                     }
                     
-                    NavigationLink(destination: LoadingView()){
+                    NavigationLink(destination: MenuView()){
                         Text("Skip").font(.custom("Inter-Medium", size: 20)).foregroundStyle(Color("Gray"))
                     }.padding(.bottom,32)
                     
