@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7D1254EB2BBA004200CB0A6A /* GameSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D1254EA2BBA004200CB0A6A /* GameSwiftUIView.swift */; };
 		7D7936CA2BB7672E002DE7CA /* Inter-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7D7936C12BB7672E002DE7CA /* Inter-SemiBold.ttf */; };
 		7D7936CB2BB7672F002DE7CA /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7D7936C22BB7672E002DE7CA /* Inter-Bold.ttf */; };
 		7D7936CC2BB7672F002DE7CA /* Inter-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7D7936C32BB7672E002DE7CA /* Inter-Light.ttf */; };
@@ -30,6 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7D1254EA2BBA004200CB0A6A /* GameSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSwiftUIView.swift; sourceTree = "<group>"; };
 		7D7936B92BB76228002DE7CA /* Color-Lines-Champion-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Color-Lines-Champion-Info.plist"; sourceTree = "<group>"; };
 		7D7936C12BB7672E002DE7CA /* Inter-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-SemiBold.ttf"; sourceTree = "<group>"; };
 		7D7936C22BB7672E002DE7CA /* Inter-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Bold.ttf"; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 				7D7936DC2BB7851C002DE7CA /* MenuView.swift */,
 				7DAA812B2BB8240D00DBC84E /* GameScene.swift */,
 				7DAA812D2BB8A65400DBC84E /* GameView.swift */,
+				7D1254EA2BBA004200CB0A6A /* GameSwiftUIView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -251,6 +254,7 @@
 				7D7936DD2BB7851C002DE7CA /* MenuView.swift in Sources */,
 				7D7936E52BB78A93002DE7CA /* NotificationsView.swift in Sources */,
 				7DA1B5CC2BB71E5100D54A41 /* Color_Lines_ChampionApp.swift in Sources */,
+				7D1254EB2BBA004200CB0A6A /* GameSwiftUIView.swift in Sources */,
 				7DAA812E2BB8A65400DBC84E /* GameView.swift in Sources */,
 				7D7936D42BB775F9002DE7CA /* LoadingView.swift in Sources */,
 			);

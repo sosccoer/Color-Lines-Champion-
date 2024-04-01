@@ -26,7 +26,7 @@ struct MenuView: View {
                         .padding(.bottom,64)
                         .padding(.horizontal,32)
                     
-                    NavigationLink(destination: GameView()
+                    NavigationLink(destination: GameSwiftUIView()
                         .ignoresSafeArea()
                         .navigationBarHidden(true)
                     ){

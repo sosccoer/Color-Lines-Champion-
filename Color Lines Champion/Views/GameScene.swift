@@ -204,7 +204,7 @@ class GameScene: SKScene {
 extension GameScene {
     // Добавление жеста перемещения к сцене
     func addPanGesture() {
-        guard let skView = self.view as? SKView else {
+        guard let skView = self.view else {
             return
         }
 
