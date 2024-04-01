@@ -10,8 +10,7 @@ import SwiftUI
 struct GameSwiftUIView: View {
     let screen: CGFloat = (UIScreen.main.bounds.size.width / 9) - 5
     @State private var presentSettings = false
-    
-    @State var cellsState: [[GameCellState]] = Array(repeating: Array(repeating: GameCellState(), count: 9), count: 9)
+    @State private var cellsState: [[GameCellState]] = Array(repeating: Array(repeating: GameCellState(), count: 9), count: 9)
     
     @State private var cellIsSelected: GameCellState? = nil
     
@@ -41,35 +40,10 @@ struct GameSwiftUIView: View {
                         ForEach(self.cellsState[rowIndex].indices, id: \.self) { columnIndex in
                             GameCell(sizeOfCell: self.screen, state: self.$cellsState[rowIndex][columnIndex]).id(rowIndex * 10 + columnIndex)
                                 .onTapGesture {
-                                    
                                     if cellIsSelected == nil {
-                                        if cellsState[rowIndex][columnIndex].size == .small {
-                                            cellsState[rowIndex][columnIndex].isFilled.toggle()
-                                            cellIsSelected = cellsState[rowIndex][columnIndex]
-                                            
-                                            // нужно добавить проверку на все чтобы не выделить несколько
-                                        }
-                                    }else {
-                                        if cellsState[rowIndex][columnIndex].color == nil {
-                                           
-                                            for (row, rowCells) in cellsState.enumerated() {
-                                                if let column = rowCells.firstIndex(where: { $0 == cellIsSelected }) {
-                                                    cellsState[row][column].color = nil
-                                                    break
-                                                }
-                                                
-                                            }
-                                            
-                                            cellIsSelected?.isFilled = false
-                                            cellIsSelected?.size = .big
-                                            cellsState[rowIndex][columnIndex] = cellIsSelected ?? GameCellState()
-                                            cellIsSelected = nil
-                                            
-                                            
-                                            
-                                            
-                                        }
-                                           
+                                        handleCellSelection(rowIndex: rowIndex, columnIndex: columnIndex)
+                                    } else {
+                                        moveSelectedCell(rowIndex: rowIndex, columnIndex: columnIndex)
                                     }
                                 }
                         }
@@ -77,17 +51,51 @@ struct GameSwiftUIView: View {
                     
                 }.padding(.horizontal, 16)
                 Spacer()
-                
-                if presentSettings == true {
-                    SettingsView(isPresented: $presentSettings)
-                }
-                
-            }.ignoresSafeArea()
-                .onAppear {
-                    createBalls(size: .big)
-                    createBalls(size: .small)
-                }
+                 
+            }
+            if presentSettings == true {
+                SettingsView(isPresented: $presentSettings)
+            }
+            
+            
+        }.ignoresSafeArea()
+            .onAppear {
+                createBalls(size: .big)
+                createBalls(size: .small)
+            }
+    }
+    
+    private func handleCellSelection(rowIndex: Int, columnIndex: Int) {
+        guard cellsState[rowIndex][columnIndex].size == .small else { return }
+        
+        cellsState[rowIndex][columnIndex].isFilled.toggle()
+        cellIsSelected = cellsState[rowIndex][columnIndex]
+    }
+    
+    private func moveSelectedCell(rowIndex: Int, columnIndex: Int) {
+        guard cellsState[rowIndex][columnIndex].color == nil else { return }
+        
+        for (row, rowCells) in cellsState.enumerated() {
+            if let column = rowCells.firstIndex(where: { $0 == cellIsSelected }) {
+                cellsState[row][column].color = nil
+                break
+            }
         }
+        
+        for (row, rowCells) in cellsState.enumerated() {
+            for (column, cell) in rowCells.enumerated() {
+                if cell.size == .small {
+                    cellsState[row][column].size = .big
+                }
+            }
+        }
+        
+        cellIsSelected?.isFilled = false
+        cellIsSelected?.size = .big
+        cellsState[rowIndex][columnIndex] = cellIsSelected ?? GameCellState()
+        cellIsSelected = nil
+        
+        createBalls(size: .small)
     }
     
     private func createBalls(size: SizeBall){
@@ -106,9 +114,17 @@ struct GameSwiftUIView: View {
                 break
             }
             let randomCalor = colors.randomElement()
-            let randomRow = Int.random(in: 0..<9)
-            let randomColumn = Int.random(in: 0..<9)
+            var randomRow = Int.random(in: 0..<9)
+            var randomColumn = Int.random(in: 0..<9)
+            
+            while cellsState[randomRow][randomColumn].color != nil {
+                randomRow = Int.random(in: 0..<9)
+                randomColumn = Int.random(in: 0..<9)
+            }
+            
             cellsState[randomRow][randomColumn] = GameCellState(color: color, size: size, isFilled: false)
+            
+            
         }
     }
 }
