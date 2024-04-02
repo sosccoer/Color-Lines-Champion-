@@ -41,6 +41,11 @@ struct GameCell: View  {
                     .frame(width: ballSize, height: ballSize)
                     .clipShape(Circle())
             }
+//            else if let color = state.color?.rawValue, state.size == .small, state.isFilled == false  {
+//                Image(color)
+//                    .frame(width: ballSize, height: ballSize)
+//                    .clipShape(Circle())
+//            }
             
         }
     }

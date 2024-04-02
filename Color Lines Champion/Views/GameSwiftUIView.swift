@@ -25,8 +25,6 @@ struct GameSwiftUIView: View {
     @State private var audio = Audio()
     @State private var vibration = Vibration()
     
-    
-    
     var body: some View {
         ZStack{
             Image("BGGame")
@@ -46,41 +44,39 @@ struct GameSwiftUIView: View {
                 }
                 .padding(.bottom,100)
                 
-                
                 HStack{
-                    
                     Text("Score: \(score)")
                         .font(.custom("MultiroundPro", size: 20))
                         .foregroundColor(Color("ScoreYellow"))
                     Spacer()
-                    Text("Score: \(score)")
+                    Text("Best score: \(score)")
                         .font(.custom("MultiroundPro", size: 20))
                         .foregroundColor(Color("ScoreYellow"))
-                    
                     
                 }.padding(.all,16)
                 
                 LazyVGrid(columns: Array(repeating: GridItem(), count: 9), spacing: 2) {
                     ForEach(cellsState.indices, id: \.self) { rowIndex in
                         ForEach(self.cellsState[rowIndex].indices, id: \.self) { columnIndex in
-                            GameCell(sizeOfCell: self.screen, state: self.$cellsState[rowIndex][columnIndex]).id(rowIndex * 10 + columnIndex)
-                                .onTapGesture {
+                            
+                            Button(action: {
+                                
+                                if  cellsState[rowIndex][columnIndex].color != nil {
+                                    handleCellSelection(rowIndex: rowIndex, columnIndex: columnIndex)
                                     
-                                    if  cellsState[rowIndex][columnIndex].color != nil {
-                                        handleCellSelection(rowIndex: rowIndex, columnIndex: columnIndex)
-                                        
-                                    }
-                                    
-                                    if cellIsSelected == nil {
-                                        handleCellSelection(rowIndex: rowIndex, columnIndex: columnIndex)
-                                    } else {
-                                        moveSelectedCell(rowIndex: rowIndex, columnIndex: columnIndex)
-                                        if checkForWinner() {
-                                            print("5 шаров")
-                                            
-                                        }
+                                }
+                                
+                                if cellIsSelected == nil {
+                                    handleCellSelection(rowIndex: rowIndex, columnIndex: columnIndex)
+                                } else {
+                                    moveSelectedCell(rowIndex: rowIndex, columnIndex: columnIndex)
+                                    if checkForWinner() {
+                                        print("5 шаров")
                                     }
                                 }
+                            }){
+                                GameCell(sizeOfCell: self.screen, state: self.$cellsState[rowIndex][columnIndex]).id(rowIndex * 10 + columnIndex)
+                            }
                         }
                     }
                     
@@ -104,15 +100,19 @@ struct GameSwiftUIView: View {
     }
     
     private func handleCellSelection(rowIndex: Int, columnIndex: Int) {
+        if let selectedCell = cellIsSelected, selectedCell == cellsState[rowIndex][columnIndex] {
+            cellIsSelected = nil
+            return
+        }
+        
         guard cellsState[rowIndex][columnIndex].size == .small else { return }
         
         cellsState[rowIndex][columnIndex].isFilled.toggle()
         
         if cellsState[rowIndex][columnIndex].isFilled == false {
             cellIsSelected = nil
-        }else {
+        } else {
             cellIsSelected = cellsState[rowIndex][columnIndex]
-            
         }
     }
     
@@ -175,9 +175,8 @@ struct GameSwiftUIView: View {
                 presentLose.toggle()
             }
         }
-        
     }
-
+    
     private func checkRowForWin(rowIndex: Int) -> Bool {
         let rowCells = cellsState[rowIndex]
         
@@ -197,7 +196,6 @@ struct GameSwiftUIView: View {
                 return true
             }
         }
-        
         return false
     }
     
@@ -239,7 +237,6 @@ struct GameSwiftUIView: View {
             if soundBool == true {
                 audio.playSound()
             }
-            
         }
     }
     
@@ -255,7 +252,6 @@ struct GameSwiftUIView: View {
                 return true
             }
         }
-        
         return false
     }
     
