@@ -9,7 +9,7 @@ import SwiftUI
 
 struct NotificationsView: View {
     var body: some View {
-        NavigationStack{
+        NavigationView{
             ZStack{
                 Image(ImageResource(name: "Background", bundle: Bundle.main ))
                     .resizable()
@@ -45,7 +45,7 @@ struct NotificationsView: View {
                     NavigationLink(destination: MenuView()){
                         Text("Yes, I Want Bonuses!")
                             .font(.custom("Inter-Medium", size: 20))
-                            .foregroundStyle(Color("Black"))
+                            .foregroundColor(Color("Black"))
                             .padding(.vertical,16)
                             .padding(.horizontal,48)
                             .background(Color("Yellow"))
@@ -55,7 +55,8 @@ struct NotificationsView: View {
                     }
                     
                     NavigationLink(destination: MenuView()){
-                        Text("Skip").font(.custom("Inter-Medium", size: 20)).foregroundStyle(Color("Gray"))
+                        Text("Skip").font(.custom("Inter-Medium", size: 20))
+                            .foregroundColor(Color("Gray"))
                     }.padding(.bottom,32)
                     
                 }

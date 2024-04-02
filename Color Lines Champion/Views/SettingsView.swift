@@ -70,7 +70,7 @@ struct SettingsView: View {
             .padding(.top,440)
             .padding(.horizontal,120)
             
-        }.background(.clear)
+        }.background(Color.clear)
     }
 }
 

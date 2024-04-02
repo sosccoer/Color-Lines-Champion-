@@ -13,7 +13,7 @@ struct MenuView: View {
     @State private var isPresentedSafari: Bool = false
     
     var body: some View {
-        NavigationStack{
+        NavigationView{
             ZStack{
                 Image(ImageResource(name: "Background", bundle: Bundle.main ))
                     .resizable()

@@ -11,9 +11,11 @@ import UIKit
 class Vibration {
     private let generator = UINotificationFeedbackGenerator()
 
-     func vibration() {
-        generator.prepare()
-        generator.notificationOccurred(.success)
+    func vibration() {
+        DispatchQueue.global(qos: .userInitiated).async {
+            self.generator.prepare()
+            self.generator.notificationOccurred(.success)
+        }
     }
     
 }
