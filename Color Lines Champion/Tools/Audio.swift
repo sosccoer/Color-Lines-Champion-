@@ -13,17 +13,16 @@ class Audio: NSObject, ObservableObject {
     var audioPlayer: AVAudioPlayer?
     
     func playSound() {
-        DispatchQueue.global(qos: .userInitiated).async {
-            
-            if let path = Bundle.main.path(forResource: "dropCoin", ofType: "mp3") {
-                do {
-                    self.audioPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
-                    self.audioPlayer?.play()
-                } catch {
-                    print("Sound Error")
-                }
+        
+        if let path = Bundle.main.path(forResource: "dropCoin", ofType: "mp3") {
+            do {
+                self.audioPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path))
+                self.audioPlayer?.play()
+            } catch {
+                print("Sound Error")
             }
         }
     }
 }
+
 

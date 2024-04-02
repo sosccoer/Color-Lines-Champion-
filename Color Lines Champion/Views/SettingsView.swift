@@ -53,6 +53,7 @@ struct SettingsView: View {
                     Toggle("", isOn: $vibrationToggle)
                         .padding(.leading,8)
                     
+                    
                 }.padding(.horizontal,32)
                     .padding(.top,170)
                 
@@ -81,12 +82,3 @@ struct SettingsView_Previews: PreviewProvider {
     }
 }
 
-
-struct CustomToggleStyle: ToggleStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        Toggle(configuration)
-            .background(configuration.isOn ? Color.green : Color.red)
-            .cornerRadius(10)
-            .aspectRatio(contentMode: .fit)
-    }
-}

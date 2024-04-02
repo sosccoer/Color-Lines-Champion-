@@ -229,13 +229,15 @@ struct GameSwiftUIView: View {
             for i in 0..<5 {
                 cellsState[rowIndex + i][columnIndex].color = nil
             }
-            
-            if vibrationBool == true {
-                vibration.vibration()
-            }
-            
-            if soundBool == true {
-                audio.playSound()
+            DispatchQueue.global(qos: .default).async {
+                
+                if vibrationBool == true {
+                    vibration.vibration()
+                }
+                
+                if soundBool == true {
+                    audio.playSound()
+                }
             }
         }
     }
