@@ -42,17 +42,19 @@ struct SettingsView: View {
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .padding(.leading,8)
+
                 }.padding(.horizontal,32)
                     .padding(.top,80)
-                
                 HStack {
                     Toggle("", isOn: $soundToggle)
                         .toggleStyle(ImageToggleStyle(onImageName: "On", offImageName: "Off"))
                         .padding(.trailing,8)
-                    
+                        
                     Toggle("", isOn: $vibrationToggle)
                         .toggleStyle(ImageToggleStyle(onImageName: "On", offImageName: "Off"))
-                        .padding(.leading,8)
+                        .padding(.horizontal,8)
+                        
+
                 }.padding(.horizontal,32)
                     .padding(.top,170)
                 
@@ -71,6 +73,7 @@ struct SettingsView: View {
             .padding(.horizontal,120)
             
         }.background(Color.clear)
+            .padding(.horizontal,-10)
     }
 }
 
