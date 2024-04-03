@@ -50,7 +50,7 @@ enum TableType {
     case column
 }
 
-enum Balls: String {
+enum Balls: String , CaseIterable {
     case pink
     case yellow
     case blue

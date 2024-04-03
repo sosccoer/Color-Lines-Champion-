@@ -152,7 +152,7 @@ struct GameSwiftUIView: View {
             }
         }()
         
-        let colors: [Balls] = [.pink, .yellow, .blue, .green, .red, .purple, .brown, .darkBlue]
+        let colors: [Balls] = Balls.allCases.shuffled()
         
         var attempts = 0
         
