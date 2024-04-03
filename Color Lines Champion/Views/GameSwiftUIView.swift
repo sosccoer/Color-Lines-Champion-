@@ -100,21 +100,32 @@ struct GameSwiftUIView: View {
     }
     
     private func handleCellSelection(rowIndex: Int, columnIndex: Int) {
+        guard cellsState[rowIndex][columnIndex].size == .small else { return }
+
+        // Если второй раз нажато на ту же ячейку, сбрасываем выделение
         if let selectedCell = cellIsSelected, selectedCell == cellsState[rowIndex][columnIndex] {
             cellIsSelected = nil
+            // Сбрасываем isFilled на всех ячейках, кроме выбранной
+            for i in 0..<cellsState.count {
+                for j in 0..<cellsState[i].count {
+                    if !(i == rowIndex && j == columnIndex) {
+                        cellsState[i][j].isFilled = false
+                    }
+                }
+            }
             return
         }
-        
-        guard cellsState[rowIndex][columnIndex].size == .small else { return }
-        
-        cellsState[rowIndex][columnIndex].isFilled.toggle()
-        
-        if cellsState[rowIndex][columnIndex].isFilled == false {
-            cellIsSelected = nil
-        } else {
-            cellIsSelected = cellsState[rowIndex][columnIndex]
+
+        for i in 0..<cellsState.count {
+            for j in 0..<cellsState[i].count {
+                cellsState[i][j].isFilled = false
+            }
         }
+
+        cellsState[rowIndex][columnIndex].isFilled = true
+        cellIsSelected = cellsState[rowIndex][columnIndex]
     }
+
     
     private func moveSelectedCell(rowIndex: Int, columnIndex: Int) {
         guard cellsState[rowIndex][columnIndex].color == nil else { return }
