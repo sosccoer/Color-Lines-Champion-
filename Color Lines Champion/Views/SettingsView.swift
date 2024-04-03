@@ -47,13 +47,12 @@ struct SettingsView: View {
                 
                 HStack {
                     Toggle("", isOn: $soundToggle)
+                        .toggleStyle(ImageToggleStyle(onImageName: "On", offImageName: "Off"))
                         .padding(.trailing,8)
                     
-                    Spacer()
                     Toggle("", isOn: $vibrationToggle)
+                        .toggleStyle(ImageToggleStyle(onImageName: "On", offImageName: "Off"))
                         .padding(.leading,8)
-                    
-                    
                 }.padding(.horizontal,32)
                     .padding(.top,170)
                 
@@ -82,3 +81,26 @@ struct SettingsView_Previews: PreviewProvider {
     }
 }
 
+import SwiftUI
+struct ImageToggleStyle: ToggleStyle {
+    var onImageName: String; var offImageName: String
+    func makeBody(configuration: Configuration) -> some View {
+        HStack {
+            configuration.label
+            Spacer()
+            Image(configuration.isOn ? onImageName : offImageName)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+            
+                . frame(width: 65, height: 35, alignment: .center)
+                .overlay(
+                    Circle()
+                        . foregroundColor(.white)
+                        . padding(.all, 9)
+                        .offset(x: configuration.isOn ? 20 : -20, y: 0)
+                        . animation(Animation.linear (duration: 0.1))
+                ).cornerRadius (20)
+                .onTapGesture { configuration.isOn.toggle() }
+        }
+    }
+}
