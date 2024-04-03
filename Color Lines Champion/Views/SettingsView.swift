@@ -88,22 +88,29 @@ import SwiftUI
 struct ImageToggleStyle: ToggleStyle {
     var onImageName: String; var offImageName: String
     func makeBody(configuration: Configuration) -> some View {
-        HStack {
-            configuration.label
-            Spacer()
-            Image(configuration.isOn ? onImageName : offImageName)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
+        ZStack{
+            HStack {
+                configuration.label
+                Spacer()
+                Image(configuration.isOn ? onImageName : offImageName)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                
+                    . frame(width: 65, height: 35, alignment: .center)
+                    .overlay(
+                        Circle()
+                            . foregroundColor(.white)
+                            . padding(.all, 9)
+                            .offset(x: configuration.isOn ? 20 : -20, y: 0)
+                            . animation(Animation.linear (duration: 0.1))
+                    ).cornerRadius (20)
+                    .onTapGesture { configuration.isOn.toggle() }
+            }
+            Text(configuration.isOn ? "ON" : "OFF")
+                .font(.custom("MultiroundPro", size: 13))
+                .foregroundColor(Color("White"))
+                .padding(.leading, configuration.isOn ? 0 : 16)
             
-                . frame(width: 65, height: 35, alignment: .center)
-                .overlay(
-                    Circle()
-                        . foregroundColor(.white)
-                        . padding(.all, 9)
-                        .offset(x: configuration.isOn ? 20 : -20, y: 0)
-                        . animation(Animation.linear (duration: 0.1))
-                ).cornerRadius (20)
-                .onTapGesture { configuration.isOn.toggle() }
         }
     }
 }
